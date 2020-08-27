@@ -13,7 +13,6 @@ import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.pojoarraylistexample.R;
@@ -24,7 +23,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 
 
-public class Home extends AppCompatActivity {
+public class Fused_Location extends AppCompatActivity {
 
 
 
@@ -38,17 +37,17 @@ public class Home extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
+        setContentView(R.layout.fused_layout);
         getSupportActionBar().hide();
         textView = findViewById(R.id.displayd);
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(Home.this);
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(Fused_Location.this);
 
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        if (ContextCompat.checkSelfPermission(Home.this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+        if (ContextCompat.checkSelfPermission(Fused_Location.this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             getLocation();
 //            Toast.makeText(this, "Done", Toast.LENGTH_SHORT).show();
         } else {
@@ -59,18 +58,18 @@ public class Home extends AppCompatActivity {
 
 
     public void askPermission() {
-        if (ContextCompat.checkSelfPermission(Home.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (ContextCompat.checkSelfPermission(Fused_Location.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
-            if (ActivityCompat.shouldShowRequestPermissionRationale(Home.this, Manifest.permission.ACCESS_FINE_LOCATION)) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(Fused_Location.this, Manifest.permission.ACCESS_FINE_LOCATION)) {
 
-                builder = new AlertDialog.Builder(Home.this);
+                builder = new AlertDialog.Builder(Fused_Location.this);
                 builder.setTitle("Permission Required")
                         .setMessage("Permission is mandatory Kindly allow")
                         .create();
                 builder.setPositiveButton("Allow", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        ActivityCompat.requestPermissions(Home.this, new String[]{
+                        ActivityCompat.requestPermissions(Fused_Location.this, new String[]{
                                 Manifest.permission.ACCESS_FINE_LOCATION
                         }, LOCATION_CODE);
 
@@ -83,7 +82,7 @@ public class Home extends AppCompatActivity {
                     }
                 });
             }
-            ActivityCompat.requestPermissions(Home.this, new String[]{
+            ActivityCompat.requestPermissions(Fused_Location.this, new String[]{
                     Manifest.permission.ACCESS_FINE_LOCATION
             }, LOCATION_CODE);
 
@@ -113,13 +112,13 @@ public class Home extends AppCompatActivity {
 
                 if (location != null) {
 
-                    Toast.makeText(Home.this, ""+location.getLatitude(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Fused_Location.this, ""+location.getLatitude(), Toast.LENGTH_SHORT).show();
                    loc=loc+"Lati:"+location.getLatitude()+"\n"+"Longitude:"+location.getLongitude()+"\n"+"Provider:"+location.getProvider()+"\n"+"Speed:"+location.getSpeed()+"\n"+"Time:"+location.getTime()+"\n"+"Accuracy:"+location.getAccuracy();
                     textView.setText(loc);
 
                 }
                 else {
-                    Toast.makeText(Home.this, "Loc null" , Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Fused_Location.this, "Loc null" , Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -127,7 +126,7 @@ public class Home extends AppCompatActivity {
         locationTask.addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toast.makeText(Home.this, " "+e, Toast.LENGTH_SHORT).show();
+                Toast.makeText(Fused_Location.this, " "+e, Toast.LENGTH_SHORT).show();
                 Log.e(TAG, "" + e);
             }
         });
